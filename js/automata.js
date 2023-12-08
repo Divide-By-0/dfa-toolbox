@@ -59,7 +59,7 @@ function genAutomataSVG(svgId, start) {
         d3.selectAll("#ellipse" + index.toString())
           .transition()
           .duration("50")
-          .attr("fill", "#419488")
+          .attr("fill", "#5eceb4")
           .attr("fill-opacity", "1");
       })
       .on("mouseout", function (d, i) {
@@ -114,11 +114,11 @@ function genAutomataSVG(svgId, start) {
           d3.select(this)
             .transition()
             .duration("50")
-            .attr("fill", "#419488")
+            .attr("fill", "#5eceb4")
             .attr("fill-opacity", "1");
           d3.selectAll(".node" + node.label).style(
             "background-color",
-            "#419488"
+            "#5eceb4"
           );
         })
         .on("mouseout", function (d, i) {
@@ -158,11 +158,11 @@ function genAutomataSVG(svgId, start) {
           d3.selectAll("#ellipse" + node.label)
             .transition()
             .duration("50")
-            .attr("fill", "#419488")
+            .attr("fill", "#5eceb4")
             .attr("fill-opacity", "1");
           d3.selectAll(".node" + node.label).style(
             "background-color",
-            "#419488"
+            "#5eceb4"
           );
         })
         .on("mouseout", function (d, i) {
@@ -189,9 +189,9 @@ function genAutomataSVG(svgId, start) {
         d3.selectAll("#ellipse" + node.label)
           .transition()
           .duration("50")
-          .attr("fill", "#419488")
+          .attr("fill", "#5eceb4")
           .attr("fill-opacity", "1");
-        d3.selectAll(".node" + node.label).style("background-color", "#419488");
+        d3.selectAll(".node" + node.label).style("background-color", "#5eceb4");
       })
       .on("mouseout", function (d, i) {
         d3.selectAll("#ellipse" + node.label)
