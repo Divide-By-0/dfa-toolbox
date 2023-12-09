@@ -71,7 +71,7 @@ $(document).ready(function () {
             return a.nature - b.nature;
         });
         symbols.sort();
-        html += '<table class="table">';
+        html += '<table class="table is-bordered is-striped is-fullwidth">';
         html += '<thead>';
         html += '<tr>';
         html += '<th>NFA STATE</th>';

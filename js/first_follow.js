@@ -44,7 +44,7 @@ $(document).ready(function () {
             input = b64EncodeUnicode($('#input_grammar').val());
         $('#input_url').val(prefix + input);
         $('#alert_error').hide();
-        html += '<table class="table">';
+        html += '<table class="table is-bordered is-striped is-fullwidth">';
         html += '<thead>';
         html += '<tr>';
         html += '<th>Symbol</th>';

@@ -42,14 +42,19 @@ $(document).ready(function () {
         },
         ascii = document.getElementById('ascii');
     html = '';
-    html += '<div class="row table-title">';
-    html += '<span class="col-xs-2">Bin</span>';
-    html += '<span class="col-xs-2">Oct</span>';
-    html += '<span class="col-xs-2">Dec</span>';
-    html += '<span class="col-xs-2">Hex</span>';
-    html += '<span class="col-xs-2">Char</span>';
-    html += '<span class="col-xs-2">HTML</span>';
-    html += '</div>';
+    html += '<table class="table is-bordered is-striped is-fullwidth">';
+    html += '<thead>';
+    html += '<tr>';
+
+    html += '<th>Bin</th>';
+    html += "<th>Oct</th>";
+    html += "<th>Dec</th>";
+    html += "<th>Hex</th>";
+    html += "<th>Char</th>";
+    html += "<th>HTML</th>";
+
+    html += '<tr>';
+    html += '<thead>';
 
     function paddingLeft(str, len) {
         var pad;
@@ -63,25 +68,27 @@ $(document).ready(function () {
     function htmlEncode(html) {
         return document.createElement('a').appendChild(document.createTextNode(html)).parentNode.innerHTML;
     }
-
+    html += "<tbody>";
 
     for (i = 0; i < 128; i += 1) {
-        html += '<div class="row">';
-        html += '<span class="col-xs-2">' + paddingLeft(i.toString(2), 8) + '</span>';
-        html += '<span class="col-xs-2">' + paddingLeft(i.toString(8), 3) + '</span>';
-        html += '<span class="col-xs-2">' + paddingLeft(i.toString(10), 3) + '</span>';
-        html += '<span class="col-xs-2">' + paddingLeft(i.toString(16), 2) + '</span>';
+        html += '<tr>';
+        html += "<td>" + paddingLeft(i.toString(2), 8) + "</td>";
+        html += "<td>" + paddingLeft(i.toString(8), 3) + "</td>";
+        html += "<td>" + paddingLeft(i.toString(10), 3) + "</td>";
+        html += "<td>" + paddingLeft(i.toString(16), 2) + "</td>";
         if (specialChars.hasOwnProperty(i.toString())) {
-            html += '<span class="col-xs-2">' + specialChars[i.toString()] + '</span>';
+            html += "<td>" + specialChars[i.toString()] + "</td>";
         } else {
-            html += '<span class="col-xs-2">' + String.fromCharCode(i) + '</span>';
+            html += "<td>" + String.fromCharCode(i) + "</td>";
         }
         encoded = htmlEncode(String.fromCharCode(i));
         if (!encoded || encoded[0] !== '&') {
             encoded = '&#' + i;
         }
-        html += '<span class="col-xs-2">' + htmlEncode(encoded) + '</span>';
-        html += '</div>';
+        html += "<td>" + htmlEncode(encoded) + "</td>";
+        html += "</tr>";
     }
+    html += "</tbody>";
+    html += "</table>";
     ascii.innerHTML = html;
 });

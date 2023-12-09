@@ -88,7 +88,7 @@ $(document).ready(function () {
     function showParsingTable(code, table) {
         var i, j,
             html = '';
-        html += '<table class="table">';
+        html += '<table class="table is-bordered is-striped is-fullwidth">';
         html += '<thead>';
         html += '<tr>';
         html += '<th>j \\ i</th>';

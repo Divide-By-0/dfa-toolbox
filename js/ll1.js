@@ -49,7 +49,7 @@ $(document).ready(function () {
         }
         symbols.sort();
         symbols.push('$');
-        html += '<table class="table">';
+        html += '<table class="table is-bordered is-striped is-fullwidth">';
         html += '<thead>';
         html += '<tr>';
         html += '<th>Head</th>';

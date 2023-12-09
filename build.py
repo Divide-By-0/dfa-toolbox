@@ -25,8 +25,8 @@ def update(last={}):
     last[MAGIC_TEMPLATE] = last_modified
     has_modification = False
 
-    # Copy the lib/, css/, js/ folder into build/
-    for folder in ['lib', 'css', 'js']:
+    # Copy the lib/, css/, js/, images/ folder into build/
+    for folder in ['lib', 'css', 'js', 'images']:
         os.system(f'cp -r {folder} {BUILD_FOLDER}')
 
     # Fo each files in the parts folder, rebuild it (if modified) and write it to the build folder

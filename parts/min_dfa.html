@@ -1,96 +1,137 @@
 <!-- Regex => NFA => DFA => Min-DFA -->
 <link rel="stylesheet" href="./css/automata.css" />
 
-<div class="row">
-  <span class="col-md-4">
-    <div class="well">
-      <h4>Introduction</h4>
-      <hr />
-      <p>Convert simple regular expressions to minimum deterministic finite automaton. (Regex => NFA => DFA => Min-DFA)</p>
-      <br />
-      <p>
-        Raw regex on top supports only the ranges a-z, A-Z, and 0-9. You can escape single characters like \+ or \@ will be interpreted to literally match the + and @ symbol
-        respectively. Note that \@ is redundant and can be simply passed as @ as well. Escaped whitespace characters like \n, \t, \r etc are special cased to match the single
-        character (i.e. like '\n') etc. We also support \w for a-zA-Z0-9_, \d for 0-9, and \s for whitespace characters (\t\r\n\v\f).
-      </p>
+<div class="tile is-ancestor">
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <p class="title">Introduction</p>
+        <p class="subtitle">Convert simple regular expressions to minimum deterministic finite
+        automaton. (Regex => NFA => DFA => Min-DFA)</p>
+        <p>
+          Raw regex on top supports only the ranges a-z, A-Z, and 0-9. You can escape single characters like \+ or \@ will be interpreted to literally match the + and @ symbol respectively. Note that \@ is redundant and can be simply passed as @ as well. Escaped whitespace characters like \n, \t, \r etc are special cased to match the single character (i.e. like '\n') etc. We also support \w for a-zA-Z0-9_, \d for 0-9, and \s for whitespace characters (\t\r\n\v\f).
+        </p>
+      </article>
     </div>
-  </span>
-  <span class="col-md-3">
-    <div class="well">
-      <h4>Supported raw regex grammars</h4>
-      <ul>
-        <li>r = (s)</li>
-        <li>r = st</li>
-        <li>r = s|t</li>
-        <li>r = s*</li>
-        <li>r = s+</li>
-        <li>r = s?</li>
-        <li>r = [stu]</li>
-        <li>r = A-Z</li>
-        <li>r = a-z</li>
-        <li>r = 0-9</li>
-        <li>r = \_ (one char escapes only)</li>
-        <li>r = ϵ <br />(Copy this character to input if needed)</li>
-      </ul>
-    </div>
-  </span>
-  <span class="col-md-4">
-    <div class="well">
-      <h4>Supported parsed regex grammars</h4>
-      <ul>
-        <li>r = (s)</li>
-        <li>r = st</li>
-        <li>r = s|t</li>
-        <li>r = s*</li>
-        <li>r = s+</li>
-        <li>r = s?</li>
-        <li>r = ϵ <br />(Copy this character to input if needed)</li>
-      </ul>
-    </div>
-  </span>
-  <span class="col-md-4">
-    <div class="well">
-      <h4>Example parsed regexes</h4>
-      <ul>
-        <li>(a|b)*</li>
-        <li>(a*|b*)*</li>
-        <li>((ϵ|a)b*)*</li>
-        <li>(a|b)*abb(a|b)*</li>
-      </ul>
-    </div>
-  </span>
+  </div>
 </div>
 
-<div class="row">
-  <div class="form-group">
-    <label for="input_regex_raw" class="col-md-1 control-label">Input Raw Regex: </label>
-    <div class="col-md-11">
-      <input type="text" class="form-control" id="input_regex_raw" placeholder="([a-zA-Z0-9\+]+b*)*" />
+<br/>
+
+<div class="tile is-ancestor">
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <p class="title">Supported raw regex grammars</p>
+        <div class="content">
+          <ul>
+            <li>r = (s)</li>
+            <li>r = st</li>
+            <li>r = s|t</li>
+            <li>r = s*</li>
+            <li>r = s+</li>
+            <li>r = s?</li>
+            <li>r = [stu]</li>
+            <li>r = A-Z</li>
+            <li>r = a-z</li>
+            <li>r = 0-9</li>
+            <li>r = \_ (one char escapes only)</li>
+            <li>r = ϵ <br />(Copy this character to input if needed)</li>
+          </ul>
+        </div>
+      </article>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="input_regex" class="col-md-1 control-label">Input Parsed Regex: </label>
-    <div class="col-md-11">
-      <input type="text" class="form-control" id="input_regex" placeholder="((ϵ|a)b*)*" />
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <p class="title">Supported parsed regex grammars</p>
+        <div class="content">
+          <ul>
+            <li>r = (s)</li>
+            <li>r = st</li>
+            <li>r = s|t</li>
+            <li>r = s*</li>
+            <li>r = s+</li>
+            <li>r = s?</li>
+            <li>r = ϵ <br />(Copy this character to input if needed)</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-offset-10 col-md-2">
-    <button id="button_convert" class="btn btn-raised btn-block btn-primary">Convert</button>
+
+<br/>
+
+<div class="tile is-ancestor">
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <p class="title">Example parsed regexes</p>
+        <div class="content">
+          <ul>
+            <li>(a|b)*</li>
+            <li>(a*|b*)*</li>
+            <li>((ϵ|a)b*)*</li>
+            <li>(a|b)*abb(a|b)*</li>
+          </ul>
+        </div>
+      </article>
+    </div>
   </div>
 </div>
-<div id="alert_error" class="alert alert-dismissible alert-danger" hidden>
-  <button type="button" class="close" data-dismiss="alert">×</button>
+
+<br/>
+
+<div>
+  <div class="field">
+    <label for="input_regex_raw">
+      Input Raw Regex:
+    </label>
+    <div class="control">
+      <input
+        type="text"
+        class="input"
+        id="input_regex_raw"
+        placeholder="([a-zA-Z0-9\+]+b*)*"
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="input_regex">
+      Input Parsed Regex:
+    </label>
+    <div class="control">
+      <input
+        type="text"
+        class="input"
+        id="input_regex"
+        placeholder="((ϵ|a)b*)*"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <button id="button_convert" class="button is-primary">Submit</button>
+  </div>
+</div>
+
+<div id="alert_error"  class="notification is-danger" hidden>
+  <button type="button" class="delete" data-dismiss="alert"></button>
   <strong>Invalid Grammar</strong>
   <p id="p_error"></p>
 </div>
+
 <div id="dfa_link"></div>
-<div class="row">
-  <div id="dfa_table" class="col-xs-12"></div>
+
+<div>
+  <div id="dfa_table"></div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
+
+<div>
+  <div>
     <div class="svg-container">
       <svg id="svg">
         <g></g>
@@ -98,17 +139,18 @@
     </div>
   </div>
 </div>
-<div class="row">
+
+<div>
   <div class="form-group">
-    <label for="input_url" class="col-md-1 control-label">URL: </label>
-    <div class="col-md-11">
-      <input type="text" class="form-control" id="input_url" readonly />
+    <label for="input_url">URL: </label>
+    <div>
+      <input type="text" class="input" id="input_url" readonly />
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.3.3/dagre-d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.4.17/dagre-d3.min.js"></script>
 <script src="./js/lexical.js"></script>
 <script src="./js/regex_to_dfa.js"></script>
 <script src="./js/automata.js"></script>
