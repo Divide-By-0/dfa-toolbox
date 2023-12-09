@@ -56,9 +56,13 @@ $(document).ready(function () {
 
   function groupKeys(keys) {
     var groupedKeys = "";
-    var keysArray = keys.split(",");
+    var keysArray = keys
+      .replace("[", "")
+      .replace("]", "")
+      .replaceAll('"', "")
+      .split(",");
     if (keysArray.length <= 1) {
-      return keys;
+      return "[" + keys.substring(2, 3) + "]";
     }
 
     groupedKeys += keysArray[0];
@@ -89,14 +93,14 @@ $(document).ready(function () {
             parseInt(keysArray[i - 2].charCodeAt(0)) + 1
         ) {
           groupedKeys += "-" + keysArray[i - 1];
-          groupedKeys += "," + keysArray[i];
+          groupedKeys += ", " + keysArray[i];
         } else {
-          groupedKeys += "," + keysArray[i];
+          groupedKeys += ", " + keysArray[i];
         }
       }
       i++;
     }
-    return groupedKeys;
+    return "[" + groupedKeys + "]";
   }
 
   function genDfaTable(start) {
@@ -126,21 +130,23 @@ $(document).ready(function () {
       return a.nature - b.nature;
     });
     symbols.sort();
+    html += '<div class="table-container">';
     html += '<table class="table is-bordered is-striped is-fullwidth">';
     html += "<thead>";
     html += "<tr>";
-    html += "<th>DFA STATE</th>";
+    // html += "<th>DFA STATE</th>";
     html += "<th>Min-DFA STATE</th>";
     html += "<th>TYPE</th>";
     for (i = 0; i < symbols.length; i += 1) {
-      html += "<th>" + symbols[i] + "</th>";
+      console.log(symbols[i]);
+        html += "<th>" + groupKeys(symbols[i]) + "</th>";
     }
     html += "</tr>";
     html += "</thead>";
     html += "<tbody>";
     for (i = 0; i < nodes.length; i += 1) {
       html += "<tr>";
-      html += "<td>{" + groupKeys(nodes[i].key) + "}</td>";
+      // html += "<td>{" + snodes[i].key + "}</td>";
       html += '<td class="node' + nodes[i].id + '">' + nodes[i].id + "</td>";
       html += "<td>" + nodes[i].type + "</td>";
       for (j = 0; j < symbols.length; j += 1) {
@@ -156,6 +162,7 @@ $(document).ready(function () {
     }
     html += "</tbody>";
     html += "</table>";
+    html += '</div>';
     return html;
   }
 
@@ -168,12 +175,16 @@ $(document).ready(function () {
     // Both input elements have characters
     if (inputRegexRaw || inputRegex) {
       // Determine the input value to process
-      inputValue = inputRegexRaw ? regexToMinDFASpec(inputRegexRaw) : inputRegex;
+      inputValue = inputRegexRaw
+        ? regexToMinDFASpec(inputRegexRaw)
+        : inputRegex;
       if (inputRegexRaw) {
         $("#input_regex").val(inputValue);
       }
     } else {
-      $("#p_error").text("Error: You must fill at least one field. Consider this raw regex: ([a-zA-Z0-9\\+]+b*)*");
+      $("#p_error").text(
+        "Error: You must fill at least one field. Consider this raw regex: ([a-zA-Z0-9\\+]+b*)*"
+      );
       $("#alert_error").show();
       return;
     }
@@ -196,7 +207,9 @@ $(document).ready(function () {
       $("svg").attr("width", $("svg").parent().width());
       genAutomataSVG("svg", dfa);
       url = prefix.replace("min_dfa", "nfa2dfa") + input;
-      $("#dfa_link").html('DFA: <a href="' + url + '" target="_blank" >' + url + "</a>");
+      $("#dfa_link").html(
+        'DFA: <a href="' + url + '" target="_blank" >' + url + "</a>"
+      );
     }
   });
 
