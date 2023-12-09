@@ -66,13 +66,14 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child box">
-        <p class="title">Example parsed regexes</p>
+        <p class="title">Example raw regexes</p>
         <div class="content">
           <ul>
             <li>(a|b)*</li>
             <li>(a*|b*)*</li>
             <li>((ϵ|a)b*)*</li>
             <li>(a|b)*abb(a|b)*</li>
+            <li>a([a-zA-Z0-9\+]+0b*)*</li>
           </ul>
         </div>
       </article>
@@ -84,22 +85,24 @@
 
 <div>
   <div class="field">
+    The raw regex field supports a small subset of regex syntax, see above. 'Submit' will automatically "parse" it into an expanded parsed form, then display the DFA.
+    <br/>
     <label for="input_regex_raw">
-      Input Raw Regex:
+      <strong>Input Raw Regex:</strong>
     </label>
     <div class="control">
       <input
         type="text"
         class="input"
         id="input_regex_raw"
-        placeholder="([a-zA-Z0-9\+]+b*)*"
+        placeholder="a([a-zA-Z0-9\+]+0b*)*"
       />
     </div>
   </div>
 
   <div class="field">
     <label for="input_regex">
-      Input Parsed Regex:
+      <strong>Input Parsed Regex (Optional):</strong>
     </label>
     <div class="control">
       <input
@@ -114,6 +117,7 @@
 
 <div class="field">
   <div class="control">
+    <br/>
     <button id="button_convert" class="button is-primary">Submit</button>
   </div>
 </div>
@@ -124,9 +128,17 @@
   <p id="p_error"></p>
 </div>
 
-<div id="dfa_link"></div>
+<div>
+  <div class="form-group">
+    <label for="input_url">Share URL: </label>
+    <div>
+      <input type="text" class="input" id="input_url" readonly />
+    </div>
+  </div>
+</div>
 
 <div>
+  Hovering on states will highlight nodes that correspond to states in the table.
   <div id="dfa_table"></div>
 </div>
 
@@ -140,14 +152,7 @@
   </div>
 </div>
 
-<div>
-  <div class="form-group">
-    <label for="input_url">URL: </label>
-    <div>
-      <input type="text" class="input" id="input_url" readonly />
-    </div>
-  </div>
-</div>
+<div id="dfa_link"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.4.17/dagre-d3.min.js"></script>

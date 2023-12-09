@@ -208,7 +208,7 @@ $(document).ready(function () {
       genAutomataSVG("svg", dfa);
       url = prefix.replace("min_dfa", "nfa2dfa") + input;
       $("#dfa_link").html(
-        'DFA: <a href="' + url + '" target="_blank" >' + url + "</a>"
+        'View Non-Minimized DFA: <a href="' + url + '" target="_blank" >' + url + "</a>"
       );
     }
   });

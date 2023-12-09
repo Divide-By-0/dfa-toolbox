@@ -17,11 +17,14 @@ MAGIC_TEMPLATE = '3B893512'
 
 def update(last={}):
     last_modified = os.path.getmtime(TEMPLATE_FILE)
+    template: str = None
     if MAGIC_TEMPLATE in last and last[MAGIC_TEMPLATE] != last_modified:
         last = {}
-    if MAGIC_TEMPLATE not in last:
-        with open(TEMPLATE_FILE) as reader:
-            template = reader.read()
+    
+    # if MAGIC_TEMPLATE not in last:
+    with open(TEMPLATE_FILE) as reader:
+        template = reader.read()
+        
     last[MAGIC_TEMPLATE] = last_modified
     has_modification = False
 
