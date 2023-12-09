@@ -130,6 +130,7 @@ $(document).ready(function () {
       return a.nature - b.nature;
     });
     symbols.sort();
+    html += '<div class="table-container">';
     html += '<table class="table is-bordered is-striped is-fullwidth">';
     html += "<thead>";
     html += "<tr>";
@@ -161,6 +162,7 @@ $(document).ready(function () {
     }
     html += "</tbody>";
     html += "</table>";
+    html += '</div>';
     return html;
   }
 
