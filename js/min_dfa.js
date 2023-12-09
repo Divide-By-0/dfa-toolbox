@@ -138,11 +138,7 @@ $(document).ready(function () {
     html += "<th>TYPE</th>";
     for (i = 0; i < symbols.length; i += 1) {
       console.log(symbols[i]);
-      if (i == 0) {
         html += "<th>" + groupKeys(symbols[i]) + "</th>";
-      } else {
-        html += "<th>" + symbols[i] + "</th>";
-      }
     }
     html += "</tr>";
     html += "</thead>";
