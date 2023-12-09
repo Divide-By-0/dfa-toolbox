@@ -54,6 +54,55 @@ $(document).ready(function () {
     return result;
   }
 
+  function groupKeys(keys) {
+    var groupedKeys = "";
+    var keysArray = keys
+      .replace("[", "")
+      .replace("]", "")
+      .replaceAll('"', "")
+      .split(",");
+    if (keysArray.length <= 1) {
+      return "[" + keys.substring(2, 3) + "]";
+    }
+
+    groupedKeys += keysArray[0];
+    let i = 1;
+    while (i < keysArray.length) {
+      // a-z: 97-122, A-Z: 65-90, 0-9: 48-57
+      // We have a sequence
+      if (
+        parseInt(keysArray[i].charCodeAt(0)) ==
+        parseInt(keysArray[i - 1].charCodeAt(0)) + 1
+      ) {
+        if (i == keysArray.length - 1) {
+          groupedKeys += "-" + keysArray[i];
+        }
+        i++;
+        continue;
+      } // We dont have a sequence
+      else {
+        // Did we just end a sequence?
+        if (
+          parseInt(keysArray[i].charCodeAt(0)) ==
+          parseInt(keysArray[i - 1].charCodeAt(0)) + 1
+        ) {
+          groupedKeys += "-" + keysArray[i - 1];
+        } else if (
+          i > 2 &&
+          parseInt(keysArray[i - 1].charCodeAt(0)) ==
+            parseInt(keysArray[i - 2].charCodeAt(0)) + 1
+        ) {
+          groupedKeys += "-" + keysArray[i - 1];
+          groupedKeys += ", " + keysArray[i];
+        } else {
+          groupedKeys += ", " + keysArray[i];
+        }
+      }
+      i++;
+    }
+    return "[" + groupedKeys + "]";
+  }
+
   function genDfaTable(start) {
     var i,
       j,
@@ -88,7 +137,12 @@ $(document).ready(function () {
     html += "<th>Min-DFA STATE</th>";
     html += "<th>TYPE</th>";
     for (i = 0; i < symbols.length; i += 1) {
-      html += "<th>" + symbols[i] + "</th>";
+      console.log(symbols[i]);
+      if (i == 0) {
+        html += "<th>" + groupKeys(symbols[i]) + "</th>";
+      } else {
+        html += "<th>" + symbols[i] + "</th>";
+      }
     }
     html += "</tr>";
     html += "</thead>";
@@ -123,12 +177,16 @@ $(document).ready(function () {
     // Both input elements have characters
     if (inputRegexRaw || inputRegex) {
       // Determine the input value to process
-      inputValue = inputRegexRaw ? regexToMinDFASpec(inputRegexRaw) : inputRegex;
+      inputValue = inputRegexRaw
+        ? regexToMinDFASpec(inputRegexRaw)
+        : inputRegex;
       if (inputRegexRaw) {
         $("#input_regex").val(inputValue);
       }
     } else {
-      $("#p_error").text("Error: You must fill at least one field. Consider this raw regex: ([a-zA-Z0-9\\+]+b*)*");
+      $("#p_error").text(
+        "Error: You must fill at least one field. Consider this raw regex: ([a-zA-Z0-9\\+]+b*)*"
+      );
       $("#alert_error").show();
       return;
     }
@@ -151,7 +209,9 @@ $(document).ready(function () {
       $("svg").attr("width", $("svg").parent().width());
       genAutomataSVG("svg", dfa);
       url = prefix.replace("min_dfa", "nfa2dfa") + input;
-      $("#dfa_link").html('DFA: <a href="' + url + '" target="_blank" >' + url + "</a>");
+      $("#dfa_link").html(
+        'DFA: <a href="' + url + '" target="_blank" >' + url + "</a>"
+      );
     }
   });
 
