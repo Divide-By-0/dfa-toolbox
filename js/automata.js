@@ -1,6 +1,55 @@
 /*jslint browser: true*/
 /*global d3, dagreD3*/
 
+function groupKeys(keys) {
+  var groupedKeys = "";
+  var keysArray = keys
+    .replace("[", "")
+    .replace("]", "")
+    .replaceAll('"', "")
+    .split(",");
+  if (keysArray.length <= 1) {
+    return "[" + keys.substring(2,3) + "]";
+  }
+
+  groupedKeys += keysArray[0];
+  let i = 1;
+  while (i < keysArray.length) {
+    // a-z: 97-122, A-Z: 65-90, 0-9: 48-57
+    // We have a sequence
+    if (
+      parseInt(keysArray[i].charCodeAt(0)) ==
+      parseInt(keysArray[i - 1].charCodeAt(0)) + 1
+    ) {
+      if (i == keysArray.length - 1) {
+        groupedKeys += "-" + keysArray[i];
+      }
+      i++;
+      continue;
+    } // We dont have a sequence
+    else {
+      // Did we just end a sequence?
+      if (
+        parseInt(keysArray[i].charCodeAt(0)) ==
+        parseInt(keysArray[i - 1].charCodeAt(0)) + 1
+      ) {
+        groupedKeys += "-" + keysArray[i - 1];
+      } else if (
+        i > 2 &&
+        parseInt(keysArray[i - 1].charCodeAt(0)) ==
+          parseInt(keysArray[i - 2].charCodeAt(0)) + 1
+      ) {
+        groupedKeys += "-" + keysArray[i - 1];
+        groupedKeys += "," + keysArray[i];
+      } else {
+        groupedKeys += "," + keysArray[i];
+      }
+    }
+    i++;
+  }
+  return "[" + groupedKeys + "]";
+}
+
 /**
  * @param {string} svgId The id of the svg tag, which should contains a `g` tag.
  * @param {object} start @see regexToNfa().
@@ -25,7 +74,10 @@ function genAutomataSVG(svgId, start) {
     render = new dagreD3.render();
 
   zoom = d3.behavior.zoom().on("zoom", function () {
-    inner.attr("transform", "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")");
+    inner.attr(
+      "transform",
+      "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")"
+    );
   });
   svg.call(zoom);
   g.setNode(-1, { shape: "text", label: "start" });
@@ -45,7 +97,7 @@ function genAutomataSVG(svgId, start) {
       for (var escapeKey in escapeMap) {
         label = label.replace("\\" + escapeKey, "\\\\" + escapeKey);
       }
-      g.setEdge(node.id, next.id, { label: label });
+      g.setEdge(node.id, next.id, { label: groupKeys(label) });
       if (!ids.hasOwnProperty(next.id)) {
         queue.push(next);
       }
@@ -211,7 +263,7 @@ function genAutomataSVG(svgId, start) {
   render(inner, g);
   svg.attr("height", g.graph().height * 1.5 + 40);
   var hscale = svg.attr("height") / g.graph().height;
-  var wscale = svg.attr("width") / (g.graph().width+40);
+  var wscale = svg.attr("width") / (g.graph().width + 40);
   var scale = hscale;
   if (hscale > wscale) {
     scale = wscale;
@@ -239,7 +291,10 @@ function genAutomatonLR0(svgId, start) {
     render = new dagreD3.render();
 
   zoom = d3.behavior.zoom().on("zoom", function () {
-    inner.attr("transform", "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")");
+    inner.attr(
+      "transform",
+      "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")"
+    );
   });
   svg.call(zoom);
 
@@ -254,7 +309,13 @@ function genAutomatonLR0(svgId, start) {
   while (front < queue.length) {
     node = queue[front];
     ids[node.key] = node;
-    label = "I" + node.num + "\n===\n" + prettyPrintItems(node.kernel) + "\n---\n" + prettyPrintItems(node.nonkernel);
+    label =
+      "I" +
+      node.num +
+      "\n===\n" +
+      prettyPrintItems(node.kernel) +
+      "\n---\n" +
+      prettyPrintItems(node.nonkernel);
     g.setNode(node.key, { shape: "rect", label: label });
     keys = Object.keys(node.edges);
     for (i = 0; i < keys.length; i += 1) {
@@ -325,12 +386,17 @@ function genAutomatonLR1(svgId, start) {
     render = new dagreD3.render();
 
   zoom = d3.behavior.zoom().on("zoom", function () {
-    inner.attr("transform", "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")");
+    inner.attr(
+      "transform",
+      "translate(" + d3.event.translate + ")" + "scale(" + d3.event.scale + ")"
+    );
   });
   svg.call(zoom);
 
   function prettyPrintItem(item) {
-    return item.head + " -> " + item.body.join(" ") + ", " + item.lookahead.join("/");
+    return (
+      item.head + " -> " + item.body.join(" ") + ", " + item.lookahead.join("/")
+    );
   }
 
   function prettyPrintItems(items) {
@@ -340,7 +406,13 @@ function genAutomatonLR1(svgId, start) {
   while (front < queue.length) {
     node = queue[front];
     ids[node.key] = node;
-    label = "I" + node.num + "\n===\n" + prettyPrintItems(node.kernel) + "\n---\n" + prettyPrintItems(node.nonkernel);
+    label =
+      "I" +
+      node.num +
+      "\n===\n" +
+      prettyPrintItems(node.kernel) +
+      "\n---\n" +
+      prettyPrintItems(node.nonkernel);
     g.setNode(node.key, { shape: "rect", label: label });
     keys = Object.keys(node.edges);
     for (i = 0; i < keys.length; i += 1) {
