@@ -9,7 +9,7 @@
         <p class="subtitle">Convert simple regular expressions to minimum deterministic finite
         automaton. (Regex => NFA => DFA => Min-DFA)</p>
         <p>
-          Raw regex on top supports only the ranges a-z, A-Z, and 0-9. You can escape single characters like \+ or \@ will be interpreted to literally match the + and @ symbol respectively. Note that \@ is redundant and can be simply passed as @ as well. Escaped whitespace characters like \n, \t, \r etc are special cased to match the single character (i.e. like '\n') etc. We also support \w for a-zA-Z0-9_, \d for 0-9, and \s for whitespace characters (\t\r\n\v\f).
+          Raw regex on top supports only the ranges a-z, A-Z, and 0-9. You can escape single characters like \+ or \@ will be interpreted to literally match the + and @ symbol respectively. Note that \@ is redundant and can be simply passed as @ as well. Escaped whitespace characters like \n, \t, \r etc are special cased to match the single character (i.e. like '\n') etc. We also support \w for a-zA-Z0-9_, \d for 0-9, and \s for whitespace characters (\t\r\n\v\f). If you want more functionality or better compatibility with existing regex patterns, we recommend using [the V2 CLI instead](https://github.com/zkemail/zk-regex). To understand what ZK Regex is and how it works, see our <a href="https://prove.email/blog/zkregex">blog post</a>.
         </p>
       </article>
     </div>
